@@ -11,6 +11,8 @@ RUN dnf install -y epel-release & dnf update -y && \
 # build ROOT
 # https://root.cern/install/dependencies/
 WORKDIR /workspace
+# todo: change this to wget.
+# right now download from cern is very slow..
 COPY root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz /workspace/
 RUN tar -xvf root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
     rm -f root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
