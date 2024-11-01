@@ -4,7 +4,7 @@ scripts to make the docker/apptainer environment for simulations (including Gean
 
 To make the docker image, run the following command in the terminal:
 ```bash
-docker build -t alma9forgeant4 .
+docker build -t alma9forgeant4:v0 .
 ```
 
 To convert the docker image to an apptainer image

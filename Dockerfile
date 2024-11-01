@@ -1,20 +1,19 @@
 ARG BASE_IMAGE=almalinux:9.4
 
 FROM ${BASE_IMAGE}
-RUN dnf install -y epel-release & dnf update -y && \
+RUN dnf install -y epel-release && \
+    dnf update -y && \
     dnf install -y gcc gcc-c++ make cmake git python3-pip zlib-devel expat-devel wget which && \
     dnf install -y tbb-devel && \
     dnf install -y binutils libX11-devel libXpm-devel libXft-devel libXext-devel python openssl-devel xrootd-client-devel xrootd-libs-devel && \
-    dnf --enablerepo=crb  install -y xxhash-devel && \
+    dnf --enablerepo=crb install -y xxhash-devel && \
     dnf clean all
 
 # build ROOT
 # https://root.cern/install/dependencies/
 WORKDIR /workspace
-# todo: change this to wget.
-# right now download from cern is very slow..
-COPY root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz /workspace/
-RUN tar -xvf root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+RUN wget https://github.com/root-project/root/releases/download/v6-32-06/root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+    tar -xvf root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
     rm -f root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
     source /workspace/root/bin/thisroot.sh
 
