@@ -1,5 +1,6 @@
 #!/bin/bash
 source /workspace/geant4-v11.2.2-install/bin/geant4.sh
+source /workspace/pythia8-install/bin/pythia8.sh
 cd /workspace/root
 source bin/thisroot.sh
 cd /workspace

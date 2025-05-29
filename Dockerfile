@@ -5,6 +5,7 @@ RUN dnf install -y epel-release && \
     dnf update -y && \
     dnf install -y gcc gcc-c++ make cmake git python3-pip zlib-devel expat-devel wget which && \
     dnf install -y tbb-devel && \
+    dnf install -y rsync && \
     dnf install -y binutils libX11-devel libXpm-devel libXft-devel libXext-devel python openssl-devel xrootd-client-devel xrootd-libs-devel && \
     dnf --enablerepo=crb install -y xxhash-devel && \
     dnf clean all
@@ -28,7 +29,19 @@ RUN wget https://github.com/Geant4/geant4/archive/refs/tags/v11.2.2.tar.gz && \
     make -j20 && make install && \
     cd /workspace && rm -rf geant4-v11.2.2 geant4-v11.2.2-build v11.2.2.tar.gz
 
+# build Pythia8
+WORKDIR /workspace
+RUN wget https://www.pythia.org/download/pythia83/pythia8315.tgz && \
+    tar -xvf pythia8315.tgz && \
+    mv pythia8315 pythia8 && \
+    cd pythia8 && \
+    ./configure --prefix=/workspace/pythia8-install --with-root=/workspace/root --with-geant4=/workspace/geant4-v11.2.2-install && \
+    make -j20 && make install && \
+    cd /workspace && rm -rf pythia8 pythia8315.tgz
+
+
 # environment
+COPY pythia8.sh /workspace/pythia8-install/bin/
 COPY entrypoint.sh /workspace/
 RUN chmod +x /workspace/entrypoint.sh
 
