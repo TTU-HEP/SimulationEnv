@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=almalinux:9.4
+ARG BASE_IMAGE=almalinux:9.7
 
 FROM ${BASE_IMAGE}
 RUN dnf install -y epel-release && \
@@ -7,15 +7,20 @@ RUN dnf install -y epel-release && \
     dnf install -y tbb-devel && \
     dnf install -y rsync && \
     dnf install -y binutils libX11-devel libXpm-devel libXft-devel libXext-devel python openssl-devel xrootd-client-devel xrootd-libs-devel && \
+    dnf install -y libtiff libtiff-devel libpng libpng-devel jasper libjpeg giflib && \
     dnf --enablerepo=crb install -y xxhash-devel && \
     dnf clean all
 
 # build ROOT
 # https://root.cern/install/dependencies/
 WORKDIR /workspace
-RUN wget https://github.com/root-project/root/releases/download/v6-32-06/root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
-    tar -xvf root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
-    rm -f root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+#RUN wget https://github.com/root-project/root/releases/download/v6-32-06/root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+#    tar -xvf root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+#    rm -f root_v6.32.06.Linux-almalinux9.4-x86_64-gcc11.4.tar.gz && \
+#    source /workspace/root/bin/thisroot.sh
+RUN wget https://github.com/root-project/root/releases/download/v6-38-00/root_v6.38.00.Linux-almalinux9.7-x86_64-gcc11.5.tar.gz && \
+    tar -xvf root_v6.38.00.Linux-almalinux9.7-x86_64-gcc11.5.tar.gz && \
+    rm -f root_v6.38.00.Linux-almalinux9.7-x86_64-gcc11.5.tar.gz && \
     source /workspace/root/bin/thisroot.sh
 
 # build GEANT4
